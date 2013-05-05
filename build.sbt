@@ -125,7 +125,8 @@ libraryDependencies ++= Seq (
   // "org.scalacheck" %% "scalacheck" % "1.10.0" % "test",
   "org.specs2" %% "specs2" % "1.13" % "test",
   "org.scalatest" % "scalatest_2.10" % "2.0.M5b" % "test",
-  "org.testng" % "testng" % "6.8.1" % "test"
+  "org.testng" % "testng" % "6.8.1" % "test",
+  "com.novocode" % "junit-interface" % "0.10-M4" % "test"
 )
 
 /* you may need these repos */
@@ -203,6 +204,9 @@ mainClass in AssemblyKeys.assembly := Some("com.epishkin.cci.Main")
 assemblySettings
 
 test in AssemblyKeys.assembly := {}
+
+//JUnit settings
+testOptions += Tests.Argument(TestFrameworks.JUnit, "-q", "-v")
 
 //TestNG settings
 seq(testNGSettings:_*)
