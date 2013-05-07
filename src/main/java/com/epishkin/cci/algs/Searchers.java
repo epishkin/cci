@@ -1,4 +1,4 @@
-package com.epishkin.cci.random.com.epishkin.cci.algs;
+package com.epishkin.cci.algs;
 
 import java.util.List;
 
