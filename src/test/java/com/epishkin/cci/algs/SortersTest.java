@@ -48,7 +48,8 @@ public class SortersTest {
     public Object[][] sorters() {
         return new Object[][] {
                 {new Sorters.SelectSorter()},
-                {new Sorters.QuickSorter()}
+                {new Sorters.QuickSorter()},
+                {new Sorters.MergeSorter()}
         };
     }
 }
