@@ -63,4 +63,22 @@ public class Sorters {
     }
 
     //todo implement in place quick sort
+
+    //todo implement merge sort
+
+    interface Sorter {
+        List<Integer> sort(List<Integer> list);
+    }
+
+    static class SelectSorter implements Sorter {
+        public List<Integer> sort(List<Integer> list) {
+            return new Sorters().selectSort(list);
+        }
+    }
+
+    static class QuickSorter implements Sorter {
+        public List<Integer> sort(List<Integer> list) {
+            return new Sorters().quickSort(list);
+        }
+    }
 }
