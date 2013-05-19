@@ -26,17 +26,43 @@ object P01 {
     case _           => throw new NoSuchElementException
   }
 
+  def lastInline[A](list: List[A]): A = {
+    if (list.isEmpty) throw new NoSuchElementException
+
+    var rest = list
+    while (!rest.tail.isEmpty) {
+      rest = rest.tail
+    }
+
+    rest.head
+  }
+
   def lastBuiltIn[A](list: List[A]): A = list.last
 }
 
 object P02 {
-  //@tailrec
-  def penultimate(list: List[Int]): Int = list match {
-    case last :: Nil => last
-    case head :: tail => tail match {
-      case last :: Nil => head
-      case head2 :: tail2 => penultimate(tail)
+  @tailrec
+  def penultimate[A](list: List[A]): A = list match {
+    case head :: next :: Nil => head
+    case _ :: tail => penultimate(tail)
+    case _ => throw new NoSuchElementException
+  }
+
+  def penultimateGeneric[A](list: List[A]): A = {
+    @tailrec
+    def nthFromEnd(n: Int, rest: List[A], index: Int)(resultList: List[A]): A = rest match {
+      case Nil => resultList.head
+      case head :: tail  => nthFromEnd(n, tail, index + 1) {
+        if (index < n)
+          List.empty[A]
+        else if (index == n)
+          list
+        else
+          resultList.tail
+      }
     }
+
+    nthFromEnd(1, list, 0)(List.empty[A])
   }
 }
 
@@ -44,7 +70,7 @@ object P03 {
   def nth[A](index: Int, list: List[A]): A = list match {
     case Nil => throw new NoSuchElementException
     case e1 :: _ if (index == 0) => e1
-    case _ :: tail => nth(index -1, tail)
+    case _ :: tail => nth(index - 1, tail)
   }
 
   def nthBuiltIn[A](index: Int, list: List[A]): A = list(index)

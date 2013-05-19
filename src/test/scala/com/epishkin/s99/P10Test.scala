@@ -23,30 +23,48 @@ import org.scalatest.matchers.MustMatchers._
  * http://aperiodic.net/phil/scala/s-99/
  */
 class P10Test extends FunSuite {
+  val list = List(1, 1, 2, 3, 5, 8)
+
   test("P01: Find the last element of a list.") {
     import P01._
 
-    last(List(1, 1, 2, 3, 5, 8)) must be(8)
+    def testLength(f: List[Int] => Int) {
+      f(list) must be(8)
+      f(List(8)) must be(8)
+      f(List(2, 8)) must be(8)
 
-    last(List(8)) must be(8)
+      evaluating {
+        f(List())
+      } must produce [NoSuchElementException]
+    }
 
-    evaluating {
-      last(List())
-    } must produce [NoSuchElementException]
-
-    lastBuiltIn(List(1, 1, 2, 3, 5, 8)) must be(8)
+    testLength(last)
+    testLength(lastInline)
+    testLength(lastBuiltIn)
   }
 
   test("P02: Find the last but one element of a list.") {
     import P02._
 
-    penultimate(List(1, 1, 2, 3, 5, 8)) must be(5)
+    def testPenultimate(f: List[Int] => Int) {
+      f(List(1, 1, 2, 3, 5, 8)) must be(5)
+      f(List(5, 8)) must be(5)
+
+      evaluating {
+        f(List())
+      } must produce [NoSuchElementException]
+
+      evaluating {
+        f(List(8))
+      } must produce [NoSuchElementException]
+    }
+
+    testPenultimate(penultimate)
+    testPenultimate(penultimateGeneric)
   }
 
   test("P03: Find the Kth element of a list.") {
     import P03._
-
-    val list = List(1, 1, 2, 3, 5, 8)
 
     nth(2, list) must be (2)
     nthBuiltIn(2, list) must be (2)
@@ -66,7 +84,6 @@ class P10Test extends FunSuite {
   test("P05: Reverse a list.") {
     import P05._
 
-    val list = List(1, 1, 2, 3, 5, 8)
     val reversed = List(8, 5, 3, 2, 1, 1)
 
     def testReverse(f: List[Int] => List[Int]) {
