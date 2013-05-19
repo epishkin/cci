@@ -142,3 +142,24 @@ object P05 {
 
   def reverseBuiltIn[A](list: List[A]): List[A] = list.reverse
 }
+
+object P06 {
+  def isPalindrome[A](list: List[A]): Boolean = {
+    list == P05.reverseBuiltIn(list)
+  }
+}
+
+object P20 {
+  def removeAt[A](n: Int, list: List[A]): (List[A], A) = {
+    def removeAtR(index: Int, start: List[A], end: List[A]): (List[A], A) = end match {
+      case e1 :: tail if (index == n) => (start ::: tail, e1)
+      case e1 :: tail => removeAtR(index + 1, start :+ e1, tail)
+      case _ => throw new IndexOutOfBoundsException
+    }
+
+    removeAtR(0, List.empty[A],  list)
+  }
+
+  def removeAtBuiltIn[A](n: Int, list: List[A]): (List[A], A) =
+    (list.take(n) ::: list.drop(n + 1), list(n))
+}

@@ -96,4 +96,25 @@ class P10Test extends FunSuite {
     testReverse(reverseInline)
     testReverse(reverseBuiltIn)
   }
+
+  test("P06: Find out whether a list is a palindrome.") {
+    P06.isPalindrome(List(1, 2, 3, 2, 1)) must be(true)
+  }
+
+  test("P20: Remove the Kth element from a list.") {
+    def testRemoveAt(f: (Int, List[Symbol]) => (List[Symbol], Symbol)) {
+      f(1, List('a, 'b, 'c, 'd)) must be((List('a, 'c, 'd), 'b))
+      f(0, List('a, 'b, 'c, 'd)) must be((List('b, 'c, 'd), 'a))
+      f(3, List('a, 'b, 'c, 'd)) must be((List('a, 'b, 'c), 'd))
+
+      evaluating {
+        f(1, List())
+      } must produce [IndexOutOfBoundsException]
+    }
+
+    import P20._
+
+    testRemoveAt(removeAt)
+    testRemoveAt(removeAtBuiltIn)
+  }
 }
