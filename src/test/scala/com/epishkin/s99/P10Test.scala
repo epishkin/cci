@@ -16,13 +16,16 @@
   */
 package com.epishkin.s99
 
-import com.epishkin.s99.P10._
-
 import org.scalatest.FunSuite
 import org.scalatest.matchers.MustMatchers._
 
+/**
+ * http://aperiodic.net/phil/scala/s-99/
+ */
 class P10Test extends FunSuite {
-  test("Find the last element of a list.") {
+  test("P01: Find the last element of a list.") {
+    import P01._
+
     last(List(1, 1, 2, 3, 5, 8)) must be(8)
 
     last(List(8)) must be(8)
@@ -34,7 +37,46 @@ class P10Test extends FunSuite {
     lastBuiltIn(List(1, 1, 2, 3, 5, 8)) must be(8)
   }
 
-  test("Find the last but one element of a list.") {
+  test("P02: Find the last but one element of a list.") {
+    import P02._
+
     penultimate(List(1, 1, 2, 3, 5, 8)) must be(5)
+  }
+
+  test("P03: Find the Kth element of a list.") {
+    import P03._
+
+    val list = List(1, 1, 2, 3, 5, 8)
+
+    nth(2, list) must be (2)
+    nthBuiltIn(2, list) must be (2)
+  }
+
+  test("P04: Find the number of elements of a list.") {
+    import P04._
+
+    length(List(1, 1, 2, 3, 5, 8)) must be(6)
+    lengthTailRecursion(List(1, 1, 2, 3, 5, 8)) must be(6)
+
+    lengthFold(List(1, 1, 2, 3, 5, 8)) must be(6)
+    lengthInline(List(1, 1, 2, 3, 5, 8)) must be(6)
+    lengthBuiltIn(List(1, 1, 2, 3, 5, 8)) must be(6)
+  }
+
+  test("P05: Reverse a list.") {
+    import P05._
+
+    val list = List(1, 1, 2, 3, 5, 8)
+    val reversed = List(8, 5, 3, 2, 1, 1)
+
+    def testReverse(f: List[Int] => List[Int]) {
+      f(list) must be(reversed)
+    }
+
+    testReverse(reverse)
+    testReverse(reverseTailRecursion)
+    testReverse(reverseFold)
+    testReverse(reverseInline)
+    testReverse(reverseBuiltIn)
   }
 }
